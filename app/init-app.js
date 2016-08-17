@@ -1,7 +1,7 @@
 //centralize app initialization for both serving and testing
 
 import express from 'express'
-import {routeAccount, routeApi} from './server/middleware/router'
+import {routeApi} from './server/middleware/router'
 import mongoose from 'mongoose'
 import {config} from './config'
 import bodyParser from 'body-parser'
@@ -14,8 +14,6 @@ export function init(testing = false){
       extended: true
     })); 
 
-    //route separately in order to add authentication only to api end-points
-    routeAccount(app)
     routeApi(app)
 
     mongoose.connect(config.test_db)
