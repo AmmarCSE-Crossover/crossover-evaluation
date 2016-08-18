@@ -1,10 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { initMap } from '../map-provider/map-agent'
 //import {generateReactKey} from '~/src/utils/utils'
 
 export default class MapView extends Component {
   constructor(props) {
     super(props)
+  }
+
+  componentDidMount() {
+    /*const script = document.createElement("script")
+    //transform editable fields with limited options to dropdown boxes
+    script.textContent = 'Awesomplete.init()'
+
+    document.body.appendChild(script);
+    */
+    initMap()
   }
 
   render() {

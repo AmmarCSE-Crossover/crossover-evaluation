@@ -7,7 +7,7 @@ import MapView from '../../view/components/MapView';
 
 //import nothing from '../../view/index';
 
-let DOM = React.DOM, body = DOM.body, div = DOM.div, script = DOM.script,
+let DOM = React.DOM, body = DOM.body, div = DOM.div, script = DOM.script, link = DOM.link,
 // This is our React component, shared by server and browser thanks to browserify
 AppFactory = React.createFactory(MapView);
 
@@ -48,10 +48,13 @@ export function GetReact(req, res, next){
         'var APP_PROPS = ' + safeStringify(props) + ';'
       }}),
 
+      link({rel: 'stylesheet', href: 'http://js.arcgis.com/3.7/js/esri/css/esri.css'}),
+
       // We'll load React from a CDN - you don't have to do this,
       // you can bundle it up or serve it locally if you like
       script({src: '//cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react.min.js'}),
       script({src: '//cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react-dom.min.js'}),
+      script({src: 'http://js.arcgis.com/3.7/'}),
 
       // Then the browser will fetch and run the browserified bundle consisting
       // of browser.js and all its dependencies.
