@@ -3,10 +3,13 @@ import browserify from 'browserify';
 import literalify from 'literalify';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import MapView from '../../view/components/MapView';
+
+//import nothing from '../../view/index';
 
 let DOM = React.DOM, body = DOM.body, div = DOM.div, script = DOM.script,
 // This is our React component, shared by server and browser thanks to browserify
-App = React.createFactory(require('../../view/App'));
+AppFactory = React.createFactory(MapView);
 
 export function GetReact(req, res, next){
     res.setHeader('Content-Type', 'text/html')
@@ -35,7 +38,7 @@ export function GetReact(req, res, next){
       // pass our data in as `props`. This div is the same one that the client
       // will "render" into on the browser from browser.js
       div({id: 'content', dangerouslySetInnerHTML: {__html:
-        ReactDOMServer.renderToString(App(props))
+        ReactDOMServer.renderToString(AppFactory(props))
       }}),
 
       // The props should match on the client and server, so we stringify them
@@ -74,10 +77,6 @@ export function GetBundle(req, res, next){
     // bundling it up with everything else
     browserify()
       .add('app/view/browser.js')
-      .transform(literalify.configure({
-        'react': 'window.React',
-        'react-dom': 'window.ReactDOM',
-      }))
       .bundle()
       .pipe(res)
 }

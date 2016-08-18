@@ -1,5 +1,5 @@
-var React = require('react'),
-    DOM = React.DOM, div = DOM.div, button = DOM.button, ul = DOM.ul, li = DOM.li
+/*import React from 'react'
+let DOM = React.DOM, div = DOM.div, button = DOM.button, ul = DOM.ul, li = DOM.li
 
 // This is just a simple example of a component that can be rendered on both
 // the server and browser
@@ -44,3 +44,36 @@ module.exports = React.createClass({
     )
   },
 })
+*/
+
+
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+/*import { fetchFilterData } from '../src/filters/actions'
+import { fetchGridData } from '../src/grid/actions'
+import { fetchPagerData } from '../src/pager/actions'*/
+import Map from './containers/Map'
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    /*const { dispatch, search } = this.props
+    dispatch(fetchFilterData(search))
+    dispatch(fetchGridData(search))
+    dispatch(fetchPagerData(search))*/
+  }
+
+  render() {
+    return (
+        <div>
+            <Map />
+        </div>
+    )
+  }
+}
+
+//export default connect()(App)
+export default App
