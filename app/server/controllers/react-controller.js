@@ -4,12 +4,16 @@ import literalify from 'literalify';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import MapView from '../../view/components/MapView';
+import AppProvider from '../../view/index';
+import App from '../../view/App'
+import configureStore from '../../view/store/configureStore'
+import { Provider } from 'react-redux'
 
 //import nothing from '../../view/index';
 
 let DOM = React.DOM, body = DOM.body, div = DOM.div, script = DOM.script, link = DOM.link,
 // This is our React component, shared by server and browser thanks to browserify
-AppFactory = React.createFactory(MapView);
+AppFactory = React.createFactory(AppProvider);
 
 export function GetReact(req, res, next){
     res.setHeader('Content-Type', 'text/html')
@@ -29,6 +33,13 @@ export function GetReact(req, res, next){
       ]
     }
 
+
+      // Create a new Redux store instance
+      const store = configureStore()
+
+      // Grab the initial state from our Redux store
+      const preloadedState = store.getState()
+
     // Here we're using React to render the outer body, so we just use the
     // simpler renderToStaticMarkup function, but you could use any templating
     // language (or just a string) for the outer page template
@@ -37,15 +48,19 @@ export function GetReact(req, res, next){
       // The actual server-side rendering of our component occurs here, and we
       // pass our data in as `props`. This div is the same one that the client
       // will "render" into on the browser from browser.js
-      div({id: 'content', dangerouslySetInnerHTML: {__html:
-        ReactDOMServer.renderToString(AppFactory(props))
+      div({id: 'root', dangerouslySetInnerHTML: {__html:
+        ReactDOMServer.renderToString(
+            <Provider store={store}>
+              <App />
+            </Provider>
+          )
       }}),
 
       // The props should match on the client and server, so we stringify them
       // on the page to be available for access by the code run in browser.js
       // You could use any var name here as long as it's unique
       script({dangerouslySetInnerHTML: {__html:
-        'var APP_PROPS = ' + safeStringify(props) + ';'
+        'window.__PRELOADED_STATE__ = ' + safeStringify(preloadedState) + ';'
       }}),
 
       //link({rel: 'stylesheet', href: 'http://js.arcgis.com/3.7/js/esri/css/esri.css'}),
@@ -64,6 +79,15 @@ export function GetReact(req, res, next){
       script({src: '/bundle.js'})
     ))
 
+      // Render the component to a string
+      const htmlout = ReactDOMServer.renderToString(
+        <Provider store={store}>
+          <App />
+        </Provider>
+      )
+
+
+  //res.send(renderFullPage(html, preloadedState))
     // Return the page to the browser
     res.end(html)
 

@@ -5,6 +5,7 @@ import {filtersReducer} from '~/src/filters/reducers'
 */
 
 const rootReducer = combineReducers({
+    x : (state = {}) => state
     /*data : dataReducer,
     headers : headerReducer,
     editRows: editRowsReducer,

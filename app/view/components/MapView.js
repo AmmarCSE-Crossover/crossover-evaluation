@@ -20,6 +20,7 @@ export default class MapView extends Component {
 
   render() {
     //const { data, headers, editRows, onEditRowClick, addRows } = this.props
+console.log(this.props)
 
     return <div>
        <style>{"\

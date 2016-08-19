@@ -1,11 +1,19 @@
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    // This is our React component, shared by server and browser thanks to browserify
-    App = React.createFactory(require('./components/MapView').default)
+import React from 'react'
+import { render } from 'react-dom'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import App from './App'
+import configureStore from './store/configureStore'
 
-// This script will run in the browser and will render our component using the
-// value from APP_PROPS that we generate inline in the page's html on the server.
-// If these props match what is used in the server render, React will see that
-// it doesn't need to generate any DOM and the page will load faster
+// Grab the state from a global injected into server-generated HTML
+const preloadedState = window.__PRELOADED_STATE__
 
-ReactDOM.render(App(window.APP_PROPS), document.getElementById('content'))
+// Create Redux store with initial state
+      const store = configureStore()
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)

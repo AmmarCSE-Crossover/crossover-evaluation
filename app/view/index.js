@@ -7,20 +7,11 @@ import configureStore from './store/configureStore'
 
 const store = configureStore()
 
-class AppProvider extends Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    return 
-          <Provider store={store}>
-            <App store={store}/>
-          </Provider> 
-       
-  }
+if(typeof window != 'undefined'){
+render(
+  <Provider store={store}>
+    <App store={store}/>
+  </Provider>,
+  document.getElementById('root')
+)
 }
-
-let nothing = {} 
-//export default nothing 
-export default AppProvider
