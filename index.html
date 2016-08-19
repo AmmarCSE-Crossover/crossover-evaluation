@@ -13,17 +13,32 @@ Released under the MIT license: http://jsbin.mit-license.org
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <title></title>
-    <link rel="stylesheet" href="http://js.arcgis.com/3.7/js/esri/css/esri.css">
-    <style>
-      html, body, #map {
-        height: 100%; width: 100%; margin: 0; padding: 0; 
+<link rel="stylesheet" href="https://js.arcgis.com/3.17/esri/themes/calcite/dijit/calcite.css">
+   <link rel="stylesheet" href="https://js.arcgis.com/3.17/esri/themes/calcite/esri/esri.css">
+   <style>
+      html,
+      body,
+      #map {
+         height: 100%;
+         width: 100%;
+         margin: 0;
+         padding: 0;
       }
-    </style>
-
+      #search {
+         display: block;
+         position: absolute;
+         z-index: 2;
+         top: 20px;
+         left: 74px;
+      }
+   </style>
   </head>
-  <body>
-    <div id="map"></div>
-    <script src="http://js.arcgis.com/3.7/"></script>
+<body class="">
+   <div class="calcite">
+   <div id="search"></div>
+   <div id="map"></div>
+    </div>
+    <script src="http://js.arcgis.com/3.17/"></script>
     <script>
       var map;
     
@@ -34,9 +49,10 @@ console.log(require)
         "esri/symbols/SimpleMarkerSymbol",
         "esri/graphic", 
         "esri/layers/GraphicsLayer",
+        "esri/dijit/Search",
         "dojo/domReady!"
       ], function(
-        Map, Point, SimpleMarkerSymbol, Graphic, GraphicsLayer
+        Map, Point, SimpleMarkerSymbol, Graphic, GraphicsLayer, Search
       ) {
         map = new Map("map", {
           basemap: "streets",
@@ -51,6 +67,10 @@ console.log(require)
           gl.add(g);
           map.addLayer(gl);
         });
+        var search = new Search({
+            map: map
+         }, "search");
+         search.startup();
       });
     </script>
   </body>

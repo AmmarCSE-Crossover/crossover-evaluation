@@ -48,13 +48,15 @@ export function GetReact(req, res, next){
         'var APP_PROPS = ' + safeStringify(props) + ';'
       }}),
 
-      link({rel: 'stylesheet', href: 'http://js.arcgis.com/3.7/js/esri/css/esri.css'}),
+      //link({rel: 'stylesheet', href: 'http://js.arcgis.com/3.7/js/esri/css/esri.css'}),
+      link({rel: 'stylesheet', href: 'https://js.arcgis.com/3.17/esri/themes/calcite/dijit/calcite.css'}),
+      link({rel: 'stylesheet', href: 'https://js.arcgis.com/3.17/esri/themes/calcite/esri/esri.css'}),
 
       // We'll load React from a CDN - you don't have to do this,
       // you can bundle it up or serve it locally if you like
       script({src: '//cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react.min.js'}),
       script({src: '//cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react-dom.min.js'}),
-      script({src: 'http://js.arcgis.com/3.7/'}),
+      script({src: 'http://js.arcgis.com/3.17/'}),
 
       // Then the browser will fetch and run the browserified bundle consisting
       // of browser.js and all its dependencies.
