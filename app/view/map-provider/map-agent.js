@@ -13,9 +13,10 @@ export function initMap(){
         "esri/Color", 
         "esri/layers/GraphicsLayer",
         "esri/dijit/Search",
+        "esri/geometry/webMercatorUtils",
         "dojo/domReady!"
         ], 
-        function(Map, Point, SimpleMarkerSymbol, SimpleLineSymbol, Graphic, Color, GraphicsLayer, Search)  {
+        function(Map, Point, SimpleMarkerSymbol, SimpleLineSymbol, Graphic, Color, GraphicsLayer, Search, webMercatorUtils)  {
             map = new Map("map", {
               basemap: "streets",
               center: [-88.21,42.21],
@@ -93,17 +94,22 @@ export function initMap(){
               graphic = new Graphic(pt, symbol);
               map.graphics.add(graphic);
             }
-            map.on("loadx", () => {
-              let gl = new GraphicsLayer();
-              let p = new Point(-88.380801, 42.10560);
-              let s = new SimpleMarkerSymbol().setSize(60);
-              let g = new Graphic(p, s);
-              gl.add(g);
-              map.addLayer(gl);
-            });
+
+            map.on('click',(event)=> mapPointToCoordinates(event))
+
             let search = new Search({
-                map: map
+                map: map,
+                showInfoWindowOnSelect: false,
+                enableInfoWindow: false
              }, "search");
              search.startup();
+
+            function mapPointToCoordinates(evt) {
+              //the map is in web mercator but display coordinates in geographic (lat, long)
+              var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
+              //display mouse coordinates
+              //lat, long
+              console.log(mp.x.toFixed(6) + ", " + mp.y.toFixed(6));
+            }
         })
 }
