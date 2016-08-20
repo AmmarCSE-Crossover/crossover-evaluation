@@ -5,7 +5,8 @@ import {filtersReducer} from '~/src/filters/reducers'
 */
 
 const rootReducer = combineReducers({
-    userType : userTypeReducer
+    userType : userTypeReducer,
+    donor : donorReducer
     /*data : dataReducer,
     headers : headerReducer,
     editRows: editRowsReducer,
@@ -21,6 +22,15 @@ function userTypeReducer(state = '', action){
   switch (action.type) {
     case 'SET_USERTYPE':
       return action.userType
+    default:
+      return state
+  }
+}
+
+function donorReducer(state = null, action){
+  switch (action.type) {
+    case 'SET_DONOR':
+      return action.donor
     default:
       return state
   }

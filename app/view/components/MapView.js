@@ -2,10 +2,24 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { initMap } from '../map-provider/map-agent'
 //import {generateReactKey} from '~/src/utils/utils'
+import {mapPointToCoordinates} from '../map-provider/map-utils'
+import {setDonor} from '../actions/'
 
 export default class MapView extends Component {
   constructor(props) {
     super(props)
+    let handlers = ['onDonorClick', 'onDonorSubmit']
+    handlers.forEach(handler => {
+        this[handler] = this[handler].bind(this)
+    })
+  }
+
+  onDonorClick(event) {
+    let coordinates = mapPointToCoordinates(event.mapPoint)
+    this.props.dispatch(setDonor(coordinates))
+  }
+
+  onDonorSubmit() {
   }
 
   componentDidUpdate() {
@@ -16,7 +30,7 @@ export default class MapView extends Component {
     document.body.appendChild(script);
     */
     if(this.props.userType){ 
-        initMap()
+        initMap(this.onDonorClick)
     }
   }
 

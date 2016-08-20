@@ -1,4 +1,4 @@
-export function initMap(){
+export function initMap(clickHandler){
     let map
     let graphic
     let currLocation
@@ -95,7 +95,7 @@ export function initMap(){
               map.graphics.add(graphic);
             }
 
-            map.on('click',(event)=> mapPointToCoordinates(event))
+            map.on('click', clickHandler)
 
             let search = new Search({
                 map: map,
@@ -103,13 +103,5 @@ export function initMap(){
                 enableInfoWindow: false
              }, "search");
              search.startup();
-
-            function mapPointToCoordinates(evt) {
-              //the map is in web mercator but display coordinates in geographic (lat, long)
-              var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
-              //display mouse coordinates
-              //lat, long
-              console.log(mp.x.toFixed(6) + ", " + mp.y.toFixed(6));
-            }
         })
 }

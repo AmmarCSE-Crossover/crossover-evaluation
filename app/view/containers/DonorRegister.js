@@ -1,11 +1,10 @@
 import { connect } from 'react-redux'
-import MapView from '../components/MapView'
-//import {editRow} from '../actions/index'
+import DonorRegisterView from '../components/DonorRegisterView'
 
 const mapStateToProps = (state) => {
-  const { userType } = state
+  const { donor } = state
 
-  return { userType }
+  return { donor }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -14,9 +13,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const Map = connect(
+const DonorRegister = connect(
   mapStateToProps,
   mapDispatchToProps
-)(MapView)
+)(DonorRegisterView)
 
-export default Map
+export default DonorRegister

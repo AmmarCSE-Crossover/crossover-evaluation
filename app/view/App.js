@@ -54,6 +54,7 @@ import { fetchGridData } from '../src/grid/actions'
 import { fetchPagerData } from '../src/pager/actions'*/
 import Map from './containers/Map'
 import UserTypePicker from './containers/UserTypePicker'
+import DonorRegister from './containers/DonorRegister'
 
 class App extends Component {
   constructor(props) {
@@ -72,6 +73,7 @@ class App extends Component {
         <div>
             <Map />
             <UserTypePicker/>
+            <DonorRegister/>
         </div>
     )
   }
