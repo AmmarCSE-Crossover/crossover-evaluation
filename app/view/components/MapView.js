@@ -8,43 +8,49 @@ export default class MapView extends Component {
     super(props)
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     /*const script = document.createElement("script")
     //transform editable fields with limited options to dropdown boxes
     script.textContent = 'Awesomplete.init()'
 
     document.body.appendChild(script);
     */
-    initMap()
+    if(this.props.userType){ 
+        initMap()
+    }
   }
 
   render() {
     //const { data, headers, editRows, onEditRowClick, addRows } = this.props
-console.log(this.props)
+    let mapView
 
-    return <div>
-       <style>{"\
-          html,\
-          body,\
-          #map {\
-             height: 100%;\
-             width: 100%;\
-             margin: 0;\
-             padding: 0;\
-          }\
-          #search {\
-             display: block;\
-             position: absolute;\
-             z-index: 2;\
-             top: 20px;\
-             left: 74px;\
-          }\
-       "}</style>
-     <div className="calcite">
+    if(this.props.userType){ 
+        mapView = <div>
+            <style>{"\
+              html,\
+              body,\
+              #map {\
+                 height: 100%;\
+                 width: 100%;\
+                 margin: 0;\
+                 padding: 0;\
+              }\
+              #search {\
+                 display: block;\
+                 position: absolute;\
+                 z-index: 2;\
+                 top: 20px;\
+                 left: 74px;\
+              }\
+           "}</style>
+         <div className="calcite">
                 <div id="map"></div>
                 <div id="search"></div>
             </div>
-    </div>
+            </div>
+    }
+
+    return <div>{mapView}</div>
     /*return <div className="grid-components">
         <div className="grid-container">
             <table className="grid">

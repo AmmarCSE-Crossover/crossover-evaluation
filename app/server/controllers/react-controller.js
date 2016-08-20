@@ -4,16 +4,13 @@ import literalify from 'literalify';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import MapView from '../../view/components/MapView';
-import AppProvider from '../../view/index';
 import App from '../../view/App'
 import configureStore from '../../view/store/configureStore'
 import { Provider } from 'react-redux'
 
 //import nothing from '../../view/index';
 
-let DOM = React.DOM, body = DOM.body, div = DOM.div, script = DOM.script, link = DOM.link,
-// This is our React component, shared by server and browser thanks to browserify
-AppFactory = React.createFactory(AppProvider);
+let DOM = React.DOM, body = DOM.body, div = DOM.div, script = DOM.script, link = DOM.link
 
 export function GetReact(req, res, next){
     res.setHeader('Content-Type', 'text/html')

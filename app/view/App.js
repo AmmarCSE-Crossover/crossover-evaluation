@@ -53,6 +53,7 @@ import { connect } from 'react-redux'
 import { fetchGridData } from '../src/grid/actions'
 import { fetchPagerData } from '../src/pager/actions'*/
 import Map from './containers/Map'
+import UserTypePicker from './containers/UserTypePicker'
 
 class App extends Component {
   constructor(props) {
@@ -70,6 +71,7 @@ class App extends Component {
     return (
         <div>
             <Map />
+            <UserTypePicker/>
         </div>
     )
   }

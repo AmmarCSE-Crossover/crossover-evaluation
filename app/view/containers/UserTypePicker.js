@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import MapView from '../components/MapView'
+import UserTypePickerView from '../components/UserTypePickerView'
 //import {editRow} from '../actions/index'
 
 const mapStateToProps = (state) => {
@@ -10,12 +10,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    dispatch
   }
 }
 
-const Map = connect(
+const UserTypePicker = connect(
   mapStateToProps,
   mapDispatchToProps
-)(MapView)
+)(UserTypePickerView)
 
-export default Map
+export default UserTypePicker
