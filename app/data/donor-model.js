@@ -7,11 +7,12 @@ const DonorSchema = new Schema({
 	number: { type: String, required: true },
 	email: { type: String, required: true },
 	address: { type: String, required: true },
-	latitude: { type: Number, required: true },
-	longitude: { type: Number, required: true },
-	bloodGroup: { type: String, required: true },
-	ip: { type: String, required: true }
+    //index lat, long, and ip since they will be searched by extensively
+    coordinates: { type: [Number], index: '2d' },
+	ip: { type: String, required: true, index: true  },
+	bloodGroup: { type: String, required: true }
 })
 
+//DonorSchema.index({ ip: 1, latitude:
 export let Donor = mongoose.model('Donor', DonorSchema)
 

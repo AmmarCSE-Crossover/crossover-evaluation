@@ -1,11 +1,7 @@
-import http from 'http'
 import io from 'socket.io'
 
-let httpServer = http.Server
-
-export function initSocketIO(app){
-    httpServer = httpServer(app)
-    let ioServer = io(httpServer)
+export function initSocketIO(appServer){
+    let ioServer = io.listen(appServer)
 
     ioServer.on('connection', function(socket){
       socket.on('chat message', function(msg){

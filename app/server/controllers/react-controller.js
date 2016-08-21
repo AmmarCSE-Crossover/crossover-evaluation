@@ -13,9 +13,21 @@ import { add } from '../../data/donor-agent'
 
 let DOM = React.DOM, body = DOM.body, div = DOM.div, script = DOM.script, link = DOM.link
 
+export function GetDonors(req, res, next){
+console.log(req)
+                /*[
+                   [
+                     [ -100, 60 ], [ -100, 0 ], [ -100, -60 ], [ 100, -60 ], [ 100, 60 ], [ -100, 60 ]
+                   ]
+                ]*/
+
+    res.end()
+}
+
 export function PostDonor(req, res, next){
     let donor = req.body
     donor.ip = req.ip
+    donor.coordinates = [donor.longitude, donor.latitude]
     add(donor, (err, donor) => console.log(err, donor))
     res.end()
 }
@@ -59,6 +71,7 @@ export function GetReact(req, res, next){
       // you can bundle it up or serve it locally if you like
       script({src: '/js/react.min.js'}),
       script({src: '/js/react-dom.min.js'}),
+      script({src: '/js/socket.io.js'}),
       script({src: '/js/arcgis.init.js'}),
 
       // Then the browser will fetch and run the browserified bundle consisting

@@ -5,7 +5,7 @@ import {routeApi} from './server/middleware/router'
 import mongoose from 'mongoose'
 import {config} from './config'
 import bodyParser from 'body-parser'
-import {initSocketIO} from './server/socket.io/socket.io'
+import {initSocketIO} from './server/socket.io/server.io'
 
 export let app = express()
 
@@ -21,8 +21,6 @@ export function init(testing = false){
 
     routeApi(app)
 
-    initSocketIO(app)
-
     mongoose.connect(config.test_db)
     mongoose.connection.on('connected', function () {
       console.log('Mongoose default connection open to ' + config.db)
@@ -30,7 +28,10 @@ export function init(testing = false){
 
     //if were test, there is no need to listen
     if(!testing){
-        app.listen(config.test_port);
+        let appServer = app.listen(config.test_port);
+
+        initSocketIO(appServer)
+
         console.log("App listening on port "+config.test_port);
     }
 }

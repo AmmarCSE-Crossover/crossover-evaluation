@@ -9,6 +9,15 @@ export function add(donor, callback){
     newDonor.save(callback)
 }
 
-export function find(donor, callback){
-    Donor.findOne(donor, callback)
+export function findWithinPolygon(coordinates, callback){
+    Donor.find({
+        coordinates : {
+           $geoWithin: {
+              $geometry: {
+                 type : "Polygon" ,
+                 coordinates
+             }
+           }
+       }
+   }, callback)
 }

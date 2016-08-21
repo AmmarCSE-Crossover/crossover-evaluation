@@ -50,9 +50,10 @@ console.log(require)
         "esri/graphic", 
         "esri/layers/GraphicsLayer",
         "esri/dijit/Search",
+        "esri/geometry/webMercatorUtils",
         "dojo/domReady!"
       ], function(
-        Map, Point, SimpleMarkerSymbol, Graphic, GraphicsLayer, Search
+        Map, Point, SimpleMarkerSymbol, Graphic, GraphicsLayer, Search, webMercatorUtils
       ) {
         map = new Map("map", {
           basemap: "streets",
@@ -66,6 +67,10 @@ console.log(require)
           var g = new Graphic(p, s);
           gl.add(g);
           map.addLayer(gl);
+        });
+        map.on("extent-change", function(event) {
+              let geographic = webMercatorUtils.webMercatorToGeographic(event.extent);
+console.log(geographic)
         });
         var search = new Search({
             map: map,

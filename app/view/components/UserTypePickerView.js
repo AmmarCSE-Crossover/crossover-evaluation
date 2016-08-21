@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { initMap } from '../map-provider/map-agent'
+import { initMap } from '../map-provider/agent'
 import { setUserType } from '../actions/'
 //import {generateReactKey} from '~/src/utils/utils'
 
