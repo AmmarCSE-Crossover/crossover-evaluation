@@ -7,29 +7,52 @@ import MapView from '../../view/components/MapView';
 import App from '../../view/App'
 import configureStore from '../../view/store/configureStore'
 import { Provider } from 'react-redux'
-import { add } from '../../data/donor-agent'
+import { add, findWithinPolygon } from '../../data/donor-agent'
+import {notifyAddDonor} from '../socket.io/server.io'
 
 //import nothing from '../../view/index';
 
 let DOM = React.DOM, body = DOM.body, div = DOM.div, script = DOM.script, link = DOM.link
 
 export function GetDonors(req, res, next){
-console.log(req)
-                /*[
-                   [
-                     [ -100, 60 ], [ -100, 0 ], [ -100, -60 ], [ 100, -60 ], [ 100, 60 ], [ -100, 60 ]
-                   ]
-                ]*/
+    const {xmin, xmax, ymin, ymax} = req.query
+    //sigh, coordinates in the mapping world are wierd
+    //initially, I thought the x was y and y was x coming from the arcgis extent
+    //apparently, it 'depends'
+    //http://gis.stackexchange.com/questions/11626/does-y-mean-latitude-and-x-mean-longitude-in-every-gis-software
+    const coordinates = [
+       [
+         [ ymin, xmax ], [ ymin, xmin ], [ ymax, xmin ], [ ymax, xmax ], [ ymin, xmax ]
+       ]
+    ]
 
-    res.end()
+    findWithinPolygon(coordinates, (err, donors) => {
+            if(err){
+                res.json({status: false, error: err.message})
+            }
+            else{
+                res.json({status: true, donors})
+            }
+        }
+    )
 }
 
 export function PostDonor(req, res, next){
     let donor = req.body
     donor.ip = req.ip
     donor.coordinates = [donor.longitude, donor.latitude]
-    add(donor, (err, donor) => console.log(err, donor))
-    res.end()
+    add(donor, (err, donor) => {
+            if(err){
+                res.json({status: false, error: err.message})
+            }
+            else{
+                notifyAddDonor(donor)
+                res.json({status: true, donor})
+            }
+        }
+    )
+
+    //res.end()
 }
 
 export function GetReact(req, res, next){

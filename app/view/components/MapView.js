@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { initMap } from '../map-provider/agent'
 //import {generateReactKey} from '~/src/utils/utils'
-import {mapPointToCoordinates} from '../map-provider/utils'
+import {mapPointToCoordinates, coordinatesToPin} from '../map-provider/utils'
 import {setDonor} from '../actions/'
 import {bindClassHandlers} from '../../utils'
 import {attachSocket} from '../../server/socket.io/client.io'
@@ -16,6 +16,7 @@ export default class MapView extends Component {
 
   onDonorClick(event) {
     let coordinates = mapPointToCoordinates(event.mapPoint)
+    coordinatesToPin(coordinates)
     this.props.dispatch(setDonor(coordinates))
   }
 
@@ -31,7 +32,7 @@ export default class MapView extends Component {
     */
     const { userType } = this.props
     if(userType){ 
-        initMap(this.onDonorClick)
+        initMap(userType, this.onDonorClick)
         if(userType == 'patient'){ 
             attachSocket()
         }

@@ -1,7 +1,9 @@
-import { zoomToLocation, getUserPosition } from './utils'
-import { attachClickHandler } from './events'
+import { attachClickHandler, setUpExtentChange } from './events'
+import { getUserPosition } from './utils'
 
-export function initMap(clickHandler) {
+export let map = null
+
+export function initMap(userType, clickHandler) {
     window.require([
         "esri/map",
         "esri/dijit/Search",
@@ -9,7 +11,6 @@ export function initMap(clickHandler) {
         "dojo/domReady!"
     ],
     function(Map, Search, Point) {
-        let map
         getUserPosition(location => {
             let point = new Point(location.coords.longitude, location.coords.latitude)
             map = new Map("map", {
@@ -18,7 +19,14 @@ export function initMap(clickHandler) {
                     zoom: 10
                 })
 
+            //I have no idea why I decoupled the code this way
+            //there is no use currently of having a separate events module
+            //sigh, oh well, time is running short
             attachClickHandler(map, clickHandler)
+
+            if(userType == 'patient'){
+                setUpExtentChange(map)
+            }
 
             let search = new Search({
                 map: map,

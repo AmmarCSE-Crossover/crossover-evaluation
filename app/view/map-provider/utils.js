@@ -1,7 +1,9 @@
+import {map} from './agent'
 //initially forced to do this since we are waiting on window.require in the browser
 export let mapPointToCoordinates = null
 export let addGraphic = null
-export let zoomToLocation = null
+export let clearGraphics = null
+export let coordinatesToPin = null
 export let getUserPosition = null
 
 if (typeof window != 'undefined') {
@@ -40,10 +42,13 @@ if (typeof window != 'undefined') {
                 map.graphics.add(graphic)
             }
 
-            zoomToLocation = (location, map) => {
-                var point = new Point(location.coords.longitude, location.coords.latitude)
+            clearGraphics = (map) => {
+                map.graphics.clear()
+            }
+
+            coordinatesToPin = (coordinates) => {
+                let point = new Point(coordinates.longitude, coordinates.latitude)
                 addGraphic(point, map)
-                map.centerAndZoom(point, 12)
             }
 
             getUserPosition = callback => {

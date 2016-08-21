@@ -19,5 +19,5 @@ export function findWithinPolygon(coordinates, callback){
              }
            }
        }
-   }, callback)
+   }, '-_id -__v -ip', callback)
 }
