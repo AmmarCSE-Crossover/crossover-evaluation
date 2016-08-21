@@ -4,14 +4,13 @@ import { initMap } from '../map-provider/map-agent'
 //import {generateReactKey} from '~/src/utils/utils'
 import {mapPointToCoordinates} from '../map-provider/map-utils'
 import {setDonor} from '../actions/'
+import {bindClassHandlers} from '../../utils'
 
 export default class MapView extends Component {
   constructor(props) {
     super(props)
-    let handlers = ['onDonorClick', 'onDonorSubmit']
-    handlers.forEach(handler => {
-        this[handler] = this[handler].bind(this)
-    })
+
+    bindClassHandlers(['onDonorClick', 'onDonorSubmit'], this)
   }
 
   onDonorClick(event) {

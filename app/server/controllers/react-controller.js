@@ -12,24 +12,13 @@ import { Provider } from 'react-redux'
 
 let DOM = React.DOM, body = DOM.body, div = DOM.div, script = DOM.script, link = DOM.link
 
+export function PostDonor(req, res, next){
+console.log(req.body)
+res.end()
+}
+
 export function GetReact(req, res, next){
     res.setHeader('Content-Type', 'text/html')
-
-    // `props` represents the data to be passed in to the React component for
-    // rendering - just as you would pass data, or expose variables in
-    // templates such as Jade or Handlebars.  We just use some dummy data
-    // here (with some potentially dangerous values for testing), but you could
-    // imagine this would be objects typically fetched async from a DB,
-    // filesystem or API, depending on the logged-in user, etc.
-    var props = {
-      items: [
-        'Item 0',
-        'Item 1',
-        'Item </script>',
-        'Item <!--inject!-->',
-      ]
-    }
-
 
       // Create a new Redux store instance
       const store = configureStore()
@@ -60,15 +49,14 @@ export function GetReact(req, res, next){
         'window.__PRELOADED_STATE__ = ' + safeStringify(preloadedState) + ';'
       }}),
 
-      //link({rel: 'stylesheet', href: 'http://js.arcgis.com/3.7/js/esri/css/esri.css'}),
-      link({rel: 'stylesheet', href: 'https://js.arcgis.com/3.17/esri/themes/calcite/dijit/calcite.css'}),
-      link({rel: 'stylesheet', href: 'https://js.arcgis.com/3.17/esri/themes/calcite/esri/esri.css'}),
+      link({rel: 'stylesheet', href: '/css/esri/calcite.css'}),
+      link({rel: 'stylesheet', href: '/css/esri/esri.css'}),
 
       // We'll load React from a CDN - you don't have to do this,
       // you can bundle it up or serve it locally if you like
-      script({src: '//cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react.min.js'}),
-      script({src: '//cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react-dom.min.js'}),
-      script({src: 'http://js.arcgis.com/3.17/'}),
+      script({src: '/js/react.min.js'}),
+      script({src: '/js/react-dom.min.js'}),
+      script({src: '/js/arcgis.init.js'}),
 
       // Then the browser will fetch and run the browserified bundle consisting
       // of browser.js and all its dependencies.

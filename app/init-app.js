@@ -9,6 +9,8 @@ import bodyParser from 'body-parser'
 export let app = express()
 
 export function init(testing = false){
+    app.use(express.static('assets'))
+
     app.use( bodyParser.json() );       // to support JSON-encoded bodies
     app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
       extended: true
@@ -18,7 +20,7 @@ export function init(testing = false){
 
     mongoose.connect(config.test_db)
     mongoose.connection.on('connected', function () {
-      console.log('Mongoose default connection open to ' + config.db);
+      console.log('Mongoose default connection open to ' + config.db)
     })
 
     //if were test, there is no need to listen

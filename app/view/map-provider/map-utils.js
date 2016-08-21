@@ -9,11 +9,11 @@ if(typeof window != 'undefined'){
         function(webMercatorUtils)  {
             mapPointToCoordinates = (mapPoint) => {
               //the map is in web mercator but display coordinates in geographic (lat, long)
-              let coordinates = webMercatorUtils.webMercatorToGeographic(mapPoint);
+              let geographic = webMercatorUtils.webMercatorToGeographic(mapPoint);
               //display mouse coordinates
               //lat, long
               //console.log(mp.x.toFixed(6) + ", " + mp.y.toFixed(6));
-              return coordinates 
+              return { latitude:  geographic.x.toFixed(6), longitude:  geographic.y.toFixed(6)}
             }
         }
     )

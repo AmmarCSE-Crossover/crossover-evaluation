@@ -1,56 +1,97 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setUserType } from '../actions/'
-//import {generateReactKey} from '~/src/utils/utils'
+import {bindClassHandlers} from '../../utils'
+import { commitDonor } from '../actions/'
 
 export default class DonorRegisterView extends Component {
   constructor(props) {
     super(props)
+
+    bindClassHandlers(['clickToAggregateChanges', 'aggregateChanges', 'onSubmit'], this)
   }
 
-  onTypePick(value) {
-    this.props.dispatch(setUserType(value))
+    clickToAggregateChanges(event){
+        const { name, value } = event.target
+        value && this.aggregateChanges(name, value)
+    }
+
+  aggregateChanges(name, value) {
+    /*let originalName = name 
+    if(~Object.keys(dropdownFields).indexOf(originalName)){
+        value = dropdownFields[originalName].dataList.find(row => row.value == value).key
+        name = dropdownFields[originalName].key
+    }*/
+
+    //aggregate changes made to donor 'form' 
+    this.setState({[name] : value})
+  }
+
+  onSubmit() {
+    this.props.dispatch(commitDonor(this.state))
+  }
+
+  shouldComponentUpdate(nextProps, nextChanges) {
+    const { donor } = nextProps 
+    if(donor && nextChanges == null){
+        const { latitude, longitude } = donor
+        this.aggregateChanges('latitude', latitude)
+        this.aggregateChanges('longitude', longitude)
+
+        return true
+    }
+
+    return false 
   }
 
   render() {
-    //const { data, headers, editRows, onEditRowClick, addRows } = this.props
+    const { donor } = this.props
     let donorRegisterView
-    if(this.props.donor){ 
-        donorRegisterView = <div>
+    if(donor){ 
+        donorRegisterView = <form>
                 <input
                     name="firstName"
                     placeholder="First Name"
                     defaultValue=""
+                    onBlur={this.clickToAggregateChanges}
                 />
                 <input
                     name="lastName"
                     placeholder="Last Name"
                     defaultValue=""
+                    onBlur={this.clickToAggregateChanges}
                 />
                 <input
                     name="number"
                     placeholder="Number"
                     defaultValue=""
+                    onBlur={this.clickToAggregateChanges}
                 />
                 <input
                     name="email"
                     placeholder="Email"
                     defaultValue=""
+                    onBlur={this.clickToAggregateChanges}
                 />
                 <input
                     name="address"
                     placeholder="Address"
                     defaultValue=""
+                    onBlur={this.clickToAggregateChanges}
                 />
                 <input
                     name="latitude"
                     placeholder="Latitude"
-                    defaultValue=""
+                    readOnly='readonly'
+                    value={donor.latitude}
+                    onBlur={this.clickToAggregateChanges}
                 />
                 <input
                     name="longitude"
                     placeholder="Longitude"
-                    defaultValue=""
+                    readOnly='readonly'
+                    value={donor.longitude}
+                    onBlur={this.clickToAggregateChanges}
                 />
                 <select defaultValue="A">
                   <option defaultValue="A">A</option>
@@ -58,7 +99,10 @@ export default class DonorRegisterView extends Component {
                   <option defaultValue="AB">AB</option>
                   <option defaultValue="O">O</option>
                 </select>
-            </div>
+                <button type="button" onClick={this.onSubmit} >
+                    Submit
+                </button>
+            </form>
     }
 
     return <div>{donorRegisterView}</div>
