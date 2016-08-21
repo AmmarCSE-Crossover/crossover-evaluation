@@ -93,7 +93,8 @@ export default class DonorRegisterView extends Component {
                     value={donor.longitude}
                     onBlur={this.clickToAggregateChanges}
                 />
-                <select defaultValue="A">
+                <select name="bloodGroup" onChange={this.clickToAggregateChanges} defaultValue="Blood Group">
+                  <option disabled>Blood Group</option>
                   <option defaultValue="A">A</option>
                   <option defaultValue="B">B</option>
                   <option defaultValue="AB">AB</option>

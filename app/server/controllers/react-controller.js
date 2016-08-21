@@ -7,14 +7,17 @@ import MapView from '../../view/components/MapView';
 import App from '../../view/App'
 import configureStore from '../../view/store/configureStore'
 import { Provider } from 'react-redux'
+import { add } from '../../data/donor-agent'
 
 //import nothing from '../../view/index';
 
 let DOM = React.DOM, body = DOM.body, div = DOM.div, script = DOM.script, link = DOM.link
 
 export function PostDonor(req, res, next){
-console.log(req.body)
-res.end()
+    let donor = req.body
+    donor.ip = req.ip
+    add(donor, (err, donor) => console.log(err, donor))
+    res.end()
 }
 
 export function GetReact(req, res, next){

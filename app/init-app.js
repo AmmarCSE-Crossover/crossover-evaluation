@@ -9,6 +9,8 @@ import bodyParser from 'body-parser'
 export let app = express()
 
 export function init(testing = false){
+    app.enable('trust proxy')
+
     app.use(express.static('assets'))
 
     app.use( bodyParser.json() );       // to support JSON-encoded bodies
