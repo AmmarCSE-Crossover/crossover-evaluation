@@ -5,6 +5,7 @@ import {routeApi} from './server/middleware/router'
 import mongoose from 'mongoose'
 import {config} from './config'
 import bodyParser from 'body-parser'
+import {initSocketIO} from './server/socket.io/socket.io'
 
 export let app = express()
 
@@ -19,6 +20,8 @@ export function init(testing = false){
     })); 
 
     routeApi(app)
+
+    initSocketIO(app)
 
     mongoose.connect(config.test_db)
     mongoose.connection.on('connected', function () {

@@ -5,6 +5,7 @@ import { initMap } from '../map-provider/map-agent'
 import {mapPointToCoordinates} from '../map-provider/map-utils'
 import {setDonor} from '../actions/'
 import {bindClassHandlers} from '../../utils'
+import {attachSocket} from '../../server/socket.io/client.io'
 
 export default class MapView extends Component {
   constructor(props) {
@@ -28,8 +29,12 @@ export default class MapView extends Component {
 
     document.body.appendChild(script);
     */
-    if(this.props.userType){ 
+    const { userType } = this.props
+    if(userType){ 
         initMap(this.onDonorClick)
+        if(userType == 'patient'){ 
+            attachSocket()
+        }
     }
   }
 
