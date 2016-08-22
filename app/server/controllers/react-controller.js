@@ -9,6 +9,7 @@ import configureStore from '../../view/store/configureStore'
 import { Provider } from 'react-redux'
 import { add, findWithinPolygon } from '../../data/donor-agent'
 import {notifyAddDonor} from '../socket.io/server.io'
+import uuid from 'node-uuid'
 
 //import nothing from '../../view/index';
 
@@ -41,18 +42,20 @@ export function PostDonor(req, res, next){
     let donor = req.body
     donor.ip = req.ip
     donor.coordinates = [donor.longitude, donor.latitude]
+    donor.editToken = uuid.v1()
+
     add(donor, (err, donor) => {
             if(err){
                 res.json({status: false, error: err.message})
             }
             else{
-                notifyAddDonor(donor)
+                delete donor._id
                 res.json({status: true, donor})
+                delete donor.editToken
+                notifyAddDonor(donor)
             }
         }
     )
-
-    //res.end()
 }
 
 export function GetReact(req, res, next){

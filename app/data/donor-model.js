@@ -10,7 +10,8 @@ const DonorSchema = new Schema({
     //index lat, long, and ip since they will be searched by extensively
     coordinates: { type: [Number], index: '2d' },
 	ip: { type: String, required: true, index: true  },
-	bloodGroup: { type: String, required: true }
+	bloodGroup: { type: String, required: true },
+	editToken: { type: String, required: true }
 })
 
 //DonorSchema.index({ ip: 1, latitude:

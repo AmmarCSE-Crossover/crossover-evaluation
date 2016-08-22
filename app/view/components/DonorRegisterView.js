@@ -48,62 +48,69 @@ export default class DonorRegisterView extends Component {
     const { donor } = this.props
     let donorRegisterView
     if(donor){ 
-        donorRegisterView = <form>
-                <input
-                    name="firstName"
-                    placeholder="First Name"
-                    defaultValue=""
-                    onBlur={this.clickToAggregateChanges}
-                />
-                <input
-                    name="lastName"
-                    placeholder="Last Name"
-                    defaultValue=""
-                    onBlur={this.clickToAggregateChanges}
-                />
-                <input
-                    name="number"
-                    placeholder="Number"
-                    defaultValue=""
-                    onBlur={this.clickToAggregateChanges}
-                />
-                <input
-                    name="email"
-                    placeholder="Email"
-                    defaultValue=""
-                    onBlur={this.clickToAggregateChanges}
-                />
-                <input
-                    name="address"
-                    placeholder="Address"
-                    defaultValue=""
-                    onBlur={this.clickToAggregateChanges}
-                />
-                <input
-                    name="latitude"
-                    placeholder="Latitude"
-                    readOnly='readonly'
-                    value={donor.latitude}
-                    onBlur={this.clickToAggregateChanges}
-                />
-                <input
-                    name="longitude"
-                    placeholder="Longitude"
-                    readOnly='readonly'
-                    value={donor.longitude}
-                    onBlur={this.clickToAggregateChanges}
-                />
-                <select name="bloodGroup" onChange={this.clickToAggregateChanges} defaultValue="Blood Group">
-                  <option disabled>Blood Group</option>
-                  <option defaultValue="A">A</option>
-                  <option defaultValue="B">B</option>
-                  <option defaultValue="AB">AB</option>
-                  <option defaultValue="O">O</option>
-                </select>
-                <button type="button" onClick={this.onSubmit} >
-                    Submit
-                </button>
-            </form>
+        if(!donor.editToken){ 
+            donorRegisterView = <form>
+                    <input
+                        name="firstName"
+                        placeholder="First Name"
+                        defaultValue=""
+                        onBlur={this.clickToAggregateChanges}
+                    />
+                    <input
+                        name="lastName"
+                        placeholder="Last Name"
+                        defaultValue=""
+                        onBlur={this.clickToAggregateChanges}
+                    />
+                    <input
+                        name="number"
+                        placeholder="Number"
+                        defaultValue=""
+                        onBlur={this.clickToAggregateChanges}
+                    />
+                    <input
+                        name="email"
+                        placeholder="Email"
+                        defaultValue=""
+                        onBlur={this.clickToAggregateChanges}
+                    />
+                    <input
+                        name="address"
+                        placeholder="Address"
+                        defaultValue=""
+                        onBlur={this.clickToAggregateChanges}
+                    />
+                    <input
+                        name="latitude"
+                        placeholder="Latitude"
+                        readOnly='readonly'
+                        value={donor.latitude}
+                        onBlur={this.clickToAggregateChanges}
+                    />
+                    <input
+                        name="longitude"
+                        placeholder="Longitude"
+                        readOnly='readonly'
+                        value={donor.longitude}
+                        onBlur={this.clickToAggregateChanges}
+                    />
+                    <select name="bloodGroup" onChange={this.clickToAggregateChanges} defaultValue="Blood Group">
+                      <option disabled>Blood Group</option>
+                      <option defaultValue="A">A</option>
+                      <option defaultValue="B">B</option>
+                      <option defaultValue="AB">AB</option>
+                      <option defaultValue="O">O</option>
+                    </select>
+                    <button type="button" onClick={this.onSubmit} >
+                        Submit
+                    </button>
+                </form>
+        }
+        else{
+            donorRegisterView = <div>
+                Thank you, Edit
+                </div>
+        }
     }
 
     return <div>{donorRegisterView}</div>

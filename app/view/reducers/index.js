@@ -30,6 +30,7 @@ function userTypeReducer(state = '', action){
 function donorReducer(state = null, action){
   switch (action.type) {
     case 'SET_DONOR':
+    case 'COMMITED_DONOR':
       return action.donor
     default:
       return state

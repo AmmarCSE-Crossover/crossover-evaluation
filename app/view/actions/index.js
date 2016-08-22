@@ -19,12 +19,13 @@ export function setDonor(donor) {
 
 export function commitDonor(donor) {
   return dispatch => {
-    ajax('POST', '/donor', (commitedResult) => { dispatch(commitedDonor()) }, JSON.stringify(donor) )
+    ajax('POST', '/donor', (commitedResult) => { dispatch(commitedDonor(commitedResult)) }, JSON.stringify(donor) )
   }
 }
 
-export function commitedDonor() {
+export function commitedDonor(donor) {
   return {
-    type: COMMITED_DONOR
+    type: COMMITED_DONOR,
+    donor
  }
 }
